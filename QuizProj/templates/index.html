@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Categories Page {% endblock title %}
+
+{% block header %}
+{% endblock header %}
+
+
+{% block content %}
+
+<h1>categories page</h1>
+<div class="parent-div">
+  <div class="centered-div">
+    {% for quiz in quizes  %}
+    <a href="{% url 'quizDetailsPage' quiz.id %}"> <h2> {{quiz}}</h2></a>
+
+    
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}
