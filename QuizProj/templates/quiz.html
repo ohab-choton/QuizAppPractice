@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 
-{% block title %} index page-1 {% endblock title %}
+{% block title %} Quiz Details Page {% endblock title %}
 
 {% block header %}
 {% endblock header %}
-
 
 {% block content %}
 
 <h1>Quiz Page</h1>
 <div class="parent-div">
   <div class="centered-div">
+    <h2>{{ quiz.title|upper }}</h2>
+    
+    <form method="POST" id="quizform" action="{% url 'sumbitPage' quiz.id %}">
+      {% csrf_token %}
+      
+      {% for q in questions %}
+        <div class="question-block">
+          <h3>{{ q.text|upper }}</h3>
 
-    {{quiz.title| upper }}
-    {% for q in questions  %}
+          {% for choice in q.choices.all %}
+            <div>
+              <input type="radio" id="choice_{{ choice.id }}" name="question_{{ q.id }}" value="{{ choice.id }}">
+              <label for="choice_{{ choice.id }}">{{ choice.text }}</label>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
 
-    <h2> {{q | upper}}</h2>
-
-   {% for choice in q.choices.all %}
-
-   <input type="radio" id="choice_{{choice.id}}" name="questions_{{q.id}}" value="{{choice.id}}" checked >
-    <label for="choice_{{choice.id}}">{{choice.text}}</label><br>
-    {% endfor %}
-
-    {% endfor %}
+      <button type="submit">Submit</button>
+    </form>
   </div>
 </div>
 
